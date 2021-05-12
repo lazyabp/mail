@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@lazy.Abp/mailing": [
+        "projects/mailing/src/public-api.ts"
+      ],
+      "@lazy.Abp/mailing/config": [
+        "projects/mailing/config/src/public-api.ts"
+      ],
+      "@proxy": ["projects/mailing/src/lib/proxy/index.ts"],
+      "@proxy/*": ["projects/mailing/src/lib/proxy/*"]
+    }
+  }
+}
