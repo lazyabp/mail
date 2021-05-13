@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Lazy.Abp.Mailing.Localization;
+using System.Threading.Tasks;
 using Volo.Abp.UI.Navigation;
 
 namespace Lazy.Abp.Mailing.Web.Menus
@@ -16,7 +17,18 @@ namespace Lazy.Abp.Mailing.Web.Menus
         private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
         {
             //Add main menu items.
-            context.Menu.AddItem(new ApplicationMenuItem(MailingMenus.Prefix, displayName: "Mailing", "~/Mailing", icon: "fa fa-globe"));
+            var l = context.GetLocalizer<MailingResource>();
+            //Add main menu items.
+
+            context.Menu.AddItem(
+                new ApplicationMenuItem(MailingMenus.MailTask, l["Menu:MailTask"], "/Mailing/MailTasks/MailTask")
+            );
+            context.Menu.AddItem(
+                new ApplicationMenuItem(MailingMenus.SmtpAccount, l["Menu:SmtpAccount"], "/Mailing/SmtpAccounts/SmtpAccount")
+            );
+            context.Menu.AddItem(
+                new ApplicationMenuItem(MailingMenus.Template, l["Menu:Template"], "/Mailing/Templates/Template")
+            );
 
             return Task.CompletedTask;
         }

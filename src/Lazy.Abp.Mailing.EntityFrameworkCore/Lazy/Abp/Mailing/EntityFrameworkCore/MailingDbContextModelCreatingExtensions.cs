@@ -1,6 +1,10 @@
 ﻿using System;
+using Lazy.Abp.Mailing.MailTasks;
+using Lazy.Abp.Mailing.SmtpAccounts;
+using Lazy.Abp.Mailing.Templates;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace Lazy.Abp.Mailing.EntityFrameworkCore
 {
@@ -38,6 +42,44 @@ namespace Lazy.Abp.Mailing.EntityFrameworkCore
                 b.HasIndex(q => q.CreationTime);
             });
             */
+            builder.Entity<Template>(b =>
+            {
+                b.ToTable(options.TablePrefix + "Templates", options.Schema);
+                b.ConfigureByConvention();
+
+
+                /* Configure more properties here */
+            });
+
+
+            builder.Entity<SmtpAccount>(b =>
+            {
+                b.ToTable(options.TablePrefix + "SmtpAccounts", options.Schema);
+                b.ConfigureByConvention();
+
+
+                /* Configure more properties here */
+            });
+
+
+            builder.Entity<MailTask>(b =>
+            {
+                b.ToTable(options.TablePrefix + "MailTasks", options.Schema);
+                b.ConfigureByConvention();
+
+                b.HasMany(q => q.Logs).WithOne().HasForeignKey(x => x.MailTaskId).IsRequired();
+                /* Configure more properties here */
+            });
+
+
+            builder.Entity<MailLog>(b =>
+            {
+                b.ToTable(options.TablePrefix + "MailLogs", options.Schema);
+                b.ConfigureByConvention();
+
+
+                /* Configure more properties here */
+            });
         }
     }
 }

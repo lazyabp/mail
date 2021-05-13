@@ -41,4 +41,16 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Pages\Mailing\MailTasks\MailTask\CreateModal.cshtml" />
+    <None Include="Pages\Mailing\MailTasks\MailTask\EditModal.cshtml" />
+    <None Include="Pages\Mailing\MailTasks\MailTask\Index.cshtml" />
+    <None Include="Pages\Mailing\SmtpAccounts\SmtpAccount\CreateModal.cshtml" />
+    <None Include="Pages\Mailing\SmtpAccounts\SmtpAccount\EditModal.cshtml" />
+    <None Include="Pages\Mailing\SmtpAccounts\SmtpAccount\Index.cshtml" />
+    <None Include="Pages\Mailing\Templates\Template\CreateModal.cshtml" />
+    <None Include="Pages\Mailing\Templates\Template\EditModal.cshtml" />
+    <None Include="Pages\Mailing\Templates\Template\Index.cshtml" />
+  </ItemGroup>
+
 </Project>

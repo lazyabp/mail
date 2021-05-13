@@ -1,0 +1,43 @@
+@page
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Lazy.Abp.Mailing.Web.Pages.Mailing.SmtpAccounts.SmtpAccount
+@using Lazy.Abp.Mailing.Localization
+@using Lazy.Abp.Mailing.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<MailingResource> L
+@{
+    PageLayout.Content.Title = L["SmtpAccount"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:SmtpAccount"].Value);
+    PageLayout.Content.MenuItemName = MailingMenus.SmtpAccount;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Mailing/SmtpAccounts/SmtpAccount/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/Mailing/SmtpAccounts/SmtpAccount/index.css"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["SmtpAccount"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+                <abp-button id="NewSmtpAccountButton"
+                            text="@L["CreateSmtpAccount"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="SmtpAccountTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

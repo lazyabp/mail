@@ -25,6 +25,7 @@ namespace Lazy.Abp.Mailing
 
             Configure<AbpDistributedEntityEventOptions>(options =>
             {
+                options.AutoEventSelectors.Add<MailTask>();
                 options.EtoMappings.Add<MailTask, MailTaskEto>(typeof(MailingDomainModule));
             });
         }

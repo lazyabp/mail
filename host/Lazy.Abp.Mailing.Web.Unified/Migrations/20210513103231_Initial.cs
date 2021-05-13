@@ -40,6 +40,27 @@ namespace Lazy.Abp.Mailing.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AbpBackgroundJobs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    JobArgs = table.Column<string>(type: "nvarchar(max)", maxLength: 1048576, nullable: false),
+                    TryCount = table.Column<short>(type: "smallint", nullable: false, defaultValue: (short)0),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NextTryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastTryTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsAbandoned = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    Priority = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)15),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbpBackgroundJobs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AbpClaimTypes",
                 columns: table => new
                 {
@@ -249,6 +270,89 @@ namespace Lazy.Abp.Mailing.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AbpUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MailingMailTasks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SmtpAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    MailTo = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MailingMailTasks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MailingSmtpAccounts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Host = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Port = table.Column<int>(type: "int", nullable: false),
+                    Account = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    UseSsl = table.Column<bool>(type: "bit", nullable: false),
+                    Power = table.Column<int>(type: "int", nullable: false),
+                    SenderEmail = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    SenderName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MailingSmtpAccounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MailingTemplates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GroupName = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
+                    TemplateContent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MailingTemplates", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -484,6 +588,28 @@ namespace Lazy.Abp.Mailing.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MailingMailLogs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MailTaskId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Log = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MailingMailLogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MailingMailLogs_MailingMailTasks_MailTaskId",
+                        column: x => x.MailTaskId,
+                        principalTable: "MailingMailTasks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AbpEntityPropertyChanges",
                 columns: table => new
                 {
@@ -525,6 +651,11 @@ namespace Lazy.Abp.Mailing.Migrations
                 name: "IX_AbpAuditLogs_TenantId_UserId_ExecutionTime",
                 table: "AbpAuditLogs",
                 columns: new[] { "TenantId", "UserId", "ExecutionTime" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AbpBackgroundJobs_IsAbandoned_NextTryTime",
+                table: "AbpBackgroundJobs",
+                columns: new[] { "IsAbandoned", "NextTryTime" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AbpEntityChanges_AuditLogId",
@@ -652,12 +783,20 @@ namespace Lazy.Abp.Mailing.Migrations
                 name: "IX_AbpUsers_UserName",
                 table: "AbpUsers",
                 column: "UserName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MailingMailLogs_MailTaskId",
+                table: "MailingMailLogs",
+                column: "MailTaskId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "AbpAuditLogActions");
+
+            migrationBuilder.DropTable(
+                name: "AbpBackgroundJobs");
 
             migrationBuilder.DropTable(
                 name: "AbpClaimTypes");
@@ -705,6 +844,15 @@ namespace Lazy.Abp.Mailing.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
+                name: "MailingMailLogs");
+
+            migrationBuilder.DropTable(
+                name: "MailingSmtpAccounts");
+
+            migrationBuilder.DropTable(
+                name: "MailingTemplates");
+
+            migrationBuilder.DropTable(
                 name: "AbpEntityChanges");
 
             migrationBuilder.DropTable(
@@ -718,6 +866,9 @@ namespace Lazy.Abp.Mailing.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpUsers");
+
+            migrationBuilder.DropTable(
+                name: "MailingMailTasks");
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");

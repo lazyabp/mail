@@ -1,0 +1,18 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
+@using Lazy.Abp.Mailing.Localization
+@inject IHtmlLocalizer<MailingResource> L
+@model Lazy.Abp.Mailing.Web.Pages.Mailing.Templates.Template.CreateModalModel
+@{
+    Layout = null;
+}
+<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
+    <abp-modal>
+        <abp-modal-header title="@L["CreateTemplate"].Value"></abp-modal-header>
+        <abp-modal-body>
+            <abp-form-content />
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</abp-dynamic-form>

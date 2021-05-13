@@ -6,6 +6,7 @@ using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 
 namespace Lazy.Abp.Mailing.EntityFrameworkCore
 {
@@ -28,6 +29,7 @@ namespace Lazy.Abp.Mailing.EntityFrameworkCore
             modelBuilder.ConfigureFeatureManagement();
             modelBuilder.ConfigureTenantManagement();
             modelBuilder.ConfigureMailing();
+            modelBuilder.ConfigureBackgroundJobs();
         }
     }
 }

@@ -1,9 +1,8 @@
 using System;
 
-namespace Lazy.Abp.Mailing.Templates.Dtos
+namespace Lazy.Abp.Mailing.Web.Pages.Mailing.Templates.Template.ViewModels
 {
-    [Serializable]
-    public class TemplateCreateUpdateDto
+    public class CreateEditTemplateViewModel
     {
         public string Name { get; set; }
 

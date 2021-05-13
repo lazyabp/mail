@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using Volo.Abp.Application.Dtos;
+using Lazy.Abp.Mailing.MailTasks;
 
-namespace Lazy.Abp.Mailing.MailTasks.Dtos
+namespace Lazy.Abp.Mailing.Web.Pages.Mailing.MailTasks.MailTask.ViewModels
 {
-    [Serializable]
-    public class MailTaskDto : FullAuditedEntityDto<Guid>
+    public class CreateEditMailTaskViewModel
     {
         public Guid TemplateId { get; set; }
 
@@ -18,7 +16,5 @@ namespace Lazy.Abp.Mailing.MailTasks.Dtos
         public bool IsActive { get; set; }
 
         public MailStatus Status { get; set; }
-
-        public List<MailLogDto> Logs { get; set; }
     }
 }

@@ -37,6 +37,9 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.Threading;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
+using Volo.Abp.BackgroundJobs;
+using Volo.Abp.EventBus.RabbitMq;
 
 namespace Lazy.Abp.Mailing
 {
@@ -64,7 +67,10 @@ namespace Lazy.Abp.Mailing
         typeof(AbpTenantManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
         typeof(AbpAspNetCoreSerilogModule),
-        typeof(AbpSwashbuckleModule)
+        typeof(AbpSwashbuckleModule),
+        typeof(MailingApplicationHostModule),
+        typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
+        typeof(AbpEventBusRabbitMqModule)
         )]
     public class MailingWebUnifiedModule : AbpModule
     {
@@ -76,6 +82,14 @@ namespace Lazy.Abp.Mailing
             Configure<AbpDbContextOptions>(options =>
             {
                 options.UseSqlServer();
+            });
+
+            Configure<AbpBackgroundJobWorkerOptions>(options =>
+            {
+                //Configure for fast running
+                options.JobPollPeriod = 1000;
+                options.DefaultFirstWaitDuration = 1;
+                options.DefaultWaitFactor = 1;
             });
 
             if (hostingEnvironment.IsDevelopment())
@@ -100,16 +114,8 @@ namespace Lazy.Abp.Mailing
 
             Configure<AbpLocalizationOptions>(options =>
             {
-                options.Languages.Add(new LanguageInfo("cs", "cs", "Čeština"));
                 options.Languages.Add(new LanguageInfo("en", "en", "English"));
-                options.Languages.Add(new LanguageInfo("en-GB", "en-GB", "English (UK)"));
-                options.Languages.Add(new LanguageInfo("fr", "fr", "Français"));
-                options.Languages.Add(new LanguageInfo("hu", "hu", "Magyar"));
-                options.Languages.Add(new LanguageInfo("pt-BR", "pt-BR", "Português (Brasil)"));
-                options.Languages.Add(new LanguageInfo("ru", "ru", "Русский"));
-                options.Languages.Add(new LanguageInfo("tr", "tr", "Türkçe"));
                 options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
-                options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });
 
             Configure<AbpMultiTenancyOptions>(options =>

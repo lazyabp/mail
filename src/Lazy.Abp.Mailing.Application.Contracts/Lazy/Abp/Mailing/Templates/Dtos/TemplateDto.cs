@@ -14,8 +14,6 @@ namespace Lazy.Abp.Mailing.Templates.Dtos
 
         public string GroupName { get; set; }
 
-        public bool IsActive { get; set; }
-
         public string TemplateContent { get; set; }
     }
 }
