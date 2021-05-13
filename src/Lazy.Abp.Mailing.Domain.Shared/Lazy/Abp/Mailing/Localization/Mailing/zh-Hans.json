@@ -1,7 +1,9 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "ManageYourProfile": "管理个人资料",
-    "SamplePageMessage": "Mailing模块的示例页面"
+    "InvalidStatus": "无效的状态：{0}",
+    "NoFoundAnyMailSendingAccounts": "找不到邮件发送账号",
+    "NoConfigMailSendingAccounts": "尚未配置邮件发送账号",
+    "MailSentSuccessfully": "邮件发送成功"
   }
 }

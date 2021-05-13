@@ -21,6 +21,14 @@ namespace Lazy.Abp.Mailing.MailTasks
             _guidGenerator = guidGenerator;
         }
 
+        public async Task<MailTask> GetByIdAsync(Guid id, bool includeDetails = false, Guid? tenantId = null)
+        {
+            using (CurrentTenant.Change(tenantId))
+            {
+                return await _repository.GetAsync(id, includeDetails);
+            }
+        }
+
         public async Task<MailTask> AddLog(Guid mailTaskId, string log, IDictionary<string, object> properties = null)
         {
             var task = await _repository.GetAsync(mailTaskId);

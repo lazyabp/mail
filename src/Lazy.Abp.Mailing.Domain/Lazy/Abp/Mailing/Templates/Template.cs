@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Validation;
@@ -17,13 +18,15 @@ namespace Lazy.Abp.Mailing.Templates
         [MaxLength(MailingConsts.MaxLength255)]
         public string Name { get; private set; }
 
+        [NotNull]
+        [MaxLength(MailingConsts.MaxLength255)]
+        public string Subject { get; private set; }
+
         public string Description { get; private set; }
 
         [CanBeNull]
         [MaxLength(MailingConsts.MaxLength32)]
         public string GroupName { get; private set; }
-
-        public bool IsActive { get; private set; }
 
         public string TemplateContent { get; private set; }
 
@@ -35,32 +38,32 @@ namespace Lazy.Abp.Mailing.Templates
             Guid id,
             Guid? tenantId,
             string name,
+            string subject,
             string description,
             string groupName,
-            bool isActive,
             string templateContent
         ) : base(id)
         {
             TenantId = tenantId;
-            Name = name;
+            Name = Check.NotNullOrWhiteSpace(name, nameof(name));
+            Subject = Check.NotNullOrWhiteSpace(subject, nameof(subject));
             Description = description;
             GroupName = groupName;
-            IsActive = isActive;
             TemplateContent = templateContent;
         }
 
         public void Update(
             string name,
+            string subject,
             string description,
             string groupName,
-            bool isActive,
             string templateContent
         )
         {
-            Name = name;
+            Name = Check.NotNullOrWhiteSpace(name, nameof(name));
+            Subject = Check.NotNullOrWhiteSpace(subject, nameof(subject));
             Description = description;
             GroupName = groupName;
-            IsActive = isActive;
             TemplateContent = templateContent;
         }
     }

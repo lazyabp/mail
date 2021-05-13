@@ -14,7 +14,7 @@ namespace Lazy.Abp.Mailing.SmtpAccounts.Dtos
 
         public string Password { get; set; }
 
-        public bool EnableSsl { get; set; }
+        public bool UseSsl { get; set; }
 
         public int Power { get; set; }
 

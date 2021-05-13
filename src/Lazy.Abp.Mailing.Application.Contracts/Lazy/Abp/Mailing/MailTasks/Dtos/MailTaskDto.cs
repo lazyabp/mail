@@ -11,6 +11,8 @@ namespace Lazy.Abp.Mailing.MailTasks.Dtos
 
         public string MailTo { get; set; }
 
+        public string Subject { get; set; }
+
         public bool IsActive { get; set; }
 
         public MailStatus Status { get; set; }

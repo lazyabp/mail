@@ -7,6 +7,8 @@ namespace Lazy.Abp.Mailing.Templates.Dtos
     {
         public string Name { get; set; }
 
+        public string Subject { get; set; }
+
         public string Description { get; set; }
 
         public string GroupName { get; set; }

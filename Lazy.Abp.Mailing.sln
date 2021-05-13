@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lazy.Abp.Mailing.HttpApi.Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lazy.Abp.Mailing.Host.Shared", "host\Lazy.Abp.Mailing.Host.Shared\Lazy.Abp.Mailing.Host.Shared.csproj", "{F6AC8D4A-EDD7-4514-8E8A-5BCB019864DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lazy.Abp.Mailing.Application.Host", "src\Lazy.Abp.Mailing.Application.Host\Lazy.Abp.Mailing.Application.Host.csproj", "{71DD31B7-538C-452C-93A7-4CEC47C679FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{F6AC8D4A-EDD7-4514-8E8A-5BCB019864DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6AC8D4A-EDD7-4514-8E8A-5BCB019864DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6AC8D4A-EDD7-4514-8E8A-5BCB019864DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71DD31B7-538C-452C-93A7-4CEC47C679FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71DD31B7-538C-452C-93A7-4CEC47C679FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71DD31B7-538C-452C-93A7-4CEC47C679FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71DD31B7-538C-452C-93A7-4CEC47C679FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +145,7 @@ Global
 		{3B7B6317-1B85-4164-8E11-75574F80AE17} = {649A3FFA-182F-4E56-9717-E6A9A2BEC545}
 		{1EDCD6D4-DF3A-4E3B-ABB6-C0D0B373EAB8} = {CCD2960C-23CC-4AB4-B84D-60C7AAA52F4D}
 		{F6AC8D4A-EDD7-4514-8E8A-5BCB019864DB} = {E400416D-2895-4512-9D17-90681EEC7E0A}
+		{71DD31B7-538C-452C-93A7-4CEC47C679FA} = {649A3FFA-182F-4E56-9717-E6A9A2BEC545}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4324B3B4-B60B-4E3C-91D8-59576B4E26DD}

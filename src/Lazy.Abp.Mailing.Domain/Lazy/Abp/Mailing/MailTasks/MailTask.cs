@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Validation;
@@ -22,6 +23,10 @@ namespace Lazy.Abp.Mailing.MailTasks
         [MaxLength(MailingConsts.MaxLength128)]
         public string MailTo { get; private set; }
 
+        [NotNull]
+        [MaxLength(MailingConsts.MaxLength255)]
+        public string Subject { get; private set; }
+
         public bool IsActive { get; private set; }
 
         public MailStatus Status { get; private set; }
@@ -38,6 +43,7 @@ namespace Lazy.Abp.Mailing.MailTasks
             Guid templateId,
             Guid? smtpAccountId,
             string mailTo,
+            string subject,
             bool isActive,
             MailStatus status,
             ICollection<MailLog> logs
@@ -46,7 +52,8 @@ namespace Lazy.Abp.Mailing.MailTasks
             TenantId = tenantId;
             TemplateId = templateId;
             SmtpAccountId = smtpAccountId;
-            MailTo = mailTo;
+            MailTo = Check.NotNullOrWhiteSpace(mailTo, nameof(mailTo));
+            Subject = subject;
             IsActive = isActive;
             Status = status;
             Logs = logs;
@@ -56,19 +63,50 @@ namespace Lazy.Abp.Mailing.MailTasks
             Guid templateId,
             Guid? smtpAccountId,
             string mailTo,
+            string subject,
             bool isActive,
             MailStatus status
         )
         {
             TemplateId = templateId;
             SmtpAccountId = smtpAccountId;
-            MailTo = mailTo;
+            MailTo = Check.NotNullOrWhiteSpace(mailTo, nameof(mailTo));
+            Subject = subject;
             IsActive = isActive;
             Status = status;
             Logs = new Collection<MailLog>();
         }
 
-        public void AddLog(Guid logId, string log, IDictionary<string, object> properties = null)
+        public void ResetStatus()
+        {
+            Status = MailStatus.Pending;
+        }
+
+        public void SetAsProcessing()
+        {
+            if (Status == MailStatus.Pending)
+            {
+                Status = MailStatus.Processing;
+            }
+        }
+
+        public void SetAsSucceed()
+        {
+            if (Status == MailStatus.Processing)
+            {
+                Status = MailStatus.Succeed;
+            }
+        }
+
+        public void SetAsFailed()
+        {
+            if (Status == MailStatus.Processing)
+            {
+                Status = MailStatus.Failed;
+            }
+        }
+
+        public void AddLog(Guid logId, [NotNull] string log, IDictionary<string, object> properties = null)
         {
             if (null == Logs)
                 Logs = new Collection<MailLog>();

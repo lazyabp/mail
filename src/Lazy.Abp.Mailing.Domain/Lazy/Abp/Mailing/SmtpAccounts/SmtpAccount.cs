@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Validation;
@@ -27,7 +28,7 @@ namespace Lazy.Abp.Mailing.SmtpAccounts
         [MaxLength(MailingConsts.MaxLength128)]
         public string Password { get; private set; }
 
-        public bool EnableSsl { get; private set; }
+        public bool UseSsl { get; private set; }
 
         public int Power { get; private set; }
 
@@ -51,7 +52,7 @@ namespace Lazy.Abp.Mailing.SmtpAccounts
             int port,
             string account,
             string password,
-            bool enableSsl,
+            bool useSsl,
             int power,
             string senderEmail,
             string senderName,
@@ -59,13 +60,13 @@ namespace Lazy.Abp.Mailing.SmtpAccounts
         ) : base(id)
         {
             TenantId = tenantId;
-            Host = host;
+            Host = Check.NotNullOrWhiteSpace(host, nameof(host));
             Port = port;
-            Account = account;
-            Password = password;
-            EnableSsl = enableSsl;
+            Account = Check.NotNullOrWhiteSpace(account, nameof(account));
+            Password = Check.NotNullOrWhiteSpace(password, nameof(password));
+            UseSsl = useSsl;
             Power = power;
-            SenderEmail = senderEmail;
+            SenderEmail = senderEmail.IsNullOrWhiteSpace() ? account : senderEmail;
             SenderName = senderName;
             IsActive = isActive;
         }
@@ -75,20 +76,20 @@ namespace Lazy.Abp.Mailing.SmtpAccounts
             int port,
             string account,
             string password,
-            bool enableSsl,
+            bool useSsl,
             int power,
             string senderEmail,
             string senderName,
             bool isActive
         )
         {
-            Host = host;
+            Host = Check.NotNullOrWhiteSpace(host, nameof(host));
             Port = port;
-            Account = account;
-            Password = password;
-            EnableSsl = enableSsl;
+            Account = Check.NotNullOrWhiteSpace(account, nameof(account));
+            Password = Check.NotNullOrWhiteSpace(password, nameof(password));
+            UseSsl = useSsl;
             Power = power;
-            SenderEmail = senderEmail;
+            SenderEmail = senderEmail.IsNullOrWhiteSpace() ? account : senderEmail;
             SenderName = senderName;
             IsActive = isActive;
         }
