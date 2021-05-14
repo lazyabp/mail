@@ -1,10 +1,12 @@
 ﻿using Lazy.Abp.Mailing.BackgroundJobs;
 using Lazy.Abp.Mailing.MailTasks;
+using System;
 using System.Threading.Tasks;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Entities.Events.Distributed;
 using Volo.Abp.EventBus.Distributed;
+using Volo.Abp.Timing;
 
 namespace Lazy.Abp.Mailing.EventBus.Handlers
 {
@@ -14,21 +16,22 @@ namespace Lazy.Abp.Mailing.EventBus.Handlers
         ITransientDependency
     {
         protected IBackgroundJobManager BackgroundJobManager { get; }
+        protected IClock Clock { get; }
 
-        public MailTaskDistributedEventHandler(IBackgroundJobManager backgroundJobManager)
+        public MailTaskDistributedEventHandler(
+            IBackgroundJobManager backgroundJobManager,
+            IClock clock
+        )
         {
             BackgroundJobManager = backgroundJobManager;
+            Clock = clock;
         }
 
         public async Task HandleEventAsync(EntityCreatedEto<MailTaskEto> eventData)
         {
             if (eventData.Entity.Status == MailStatus.Pending)
             {
-                await BackgroundJobManager.EnqueueAsync(new MailingSendingJobArgs
-                {
-                    TenantId = eventData.Entity.TenantId,
-                    MailTaskId = eventData.Entity.Id
-                });
+                await QueueAsync(eventData.Entity);
             }
         }
 
@@ -36,12 +39,23 @@ namespace Lazy.Abp.Mailing.EventBus.Handlers
         {
             if (eventData.Entity.Status == MailStatus.Pending)
             {
-                await BackgroundJobManager.EnqueueAsync(new MailingSendingJobArgs
-                {
-                    TenantId = eventData.Entity.TenantId,
-                    MailTaskId = eventData.Entity.Id
-                });
+                await QueueAsync(eventData.Entity);
             }
+        }
+
+        protected async Task QueueAsync(MailTaskEto mailTask)
+        {
+            TimeSpan? delay = null;
+            if (mailTask.PlanedSendingTime.HasValue && mailTask.PlanedSendingTime.Value > Clock.Now)
+            {
+                delay = mailTask.PlanedSendingTime.Value - Clock.Now;
+            }
+
+            await BackgroundJobManager.EnqueueAsync(new MailingSendingJobArgs
+            {
+                TenantId = mailTask.TenantId,
+                MailTaskId = mailTask.Id
+            }, delay: delay);
         }
     }
 }
