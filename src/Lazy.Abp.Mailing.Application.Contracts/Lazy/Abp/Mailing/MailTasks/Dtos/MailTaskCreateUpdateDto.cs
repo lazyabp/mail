@@ -16,5 +16,7 @@ namespace Lazy.Abp.Mailing.MailTasks.Dtos
         public bool IsActive { get; set; }
 
         public MailStatus Status { get; set; }
+
+        public DateTime? PlanedSendingTime { get; set; }
     }
 }

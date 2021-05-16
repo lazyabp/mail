@@ -31,6 +31,8 @@ namespace Lazy.Abp.Mailing.MailTasks
 
         public MailStatus Status { get; private set; }
 
+        public DateTime? PlanedSendingTime { get; private set; }
+
         public ICollection<MailLog> Logs { get; protected set; }
 
         protected MailTask()
@@ -46,7 +48,7 @@ namespace Lazy.Abp.Mailing.MailTasks
             string subject,
             bool isActive,
             MailStatus status,
-            ICollection<MailLog> logs
+            DateTime? planedSendingTime
         ) : base(id)
         {
             TenantId = tenantId;
@@ -56,7 +58,8 @@ namespace Lazy.Abp.Mailing.MailTasks
             Subject = subject;
             IsActive = isActive;
             Status = status;
-            Logs = logs;
+            PlanedSendingTime = planedSendingTime;
+            Logs = new Collection<MailLog>();
         }
 
         public void Update(
@@ -65,7 +68,8 @@ namespace Lazy.Abp.Mailing.MailTasks
             string mailTo,
             string subject,
             bool isActive,
-            MailStatus status
+            MailStatus status,
+            DateTime? planedSendingTime
         )
         {
             TemplateId = templateId;
@@ -74,7 +78,7 @@ namespace Lazy.Abp.Mailing.MailTasks
             Subject = subject;
             IsActive = isActive;
             Status = status;
-            Logs = new Collection<MailLog>();
+            PlanedSendingTime = planedSendingTime;
         }
 
         public void ResetStatus()
