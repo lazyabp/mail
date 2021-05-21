@@ -25,7 +25,7 @@ namespace Lazy.Abp.Mailing
                 options.Resources
                     .Add<MailingResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))
-                    .AddVirtualJson("/Localization/Mailing");
+                    .AddVirtualJson("/Lazy/Abp/Mailing/Localization/Mailing");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>
