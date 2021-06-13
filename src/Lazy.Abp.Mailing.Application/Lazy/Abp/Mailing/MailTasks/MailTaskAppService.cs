@@ -31,6 +31,7 @@ namespace Lazy.Abp.Mailing.MailTasks
                 .WhereIf(!input.Filter.IsNullOrEmpty(),
                     q => false
                     || q.MailTo.Contains(input.Filter)
+                    || q.Subject.Contains(input.Filter)
                 );
         }
     }

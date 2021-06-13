@@ -27,6 +27,8 @@ namespace Lazy.Abp.Mailing.MailTasks
         [MaxLength(MailingConsts.MaxLength255)]
         public string Subject { get; private set; }
 
+        public string Body { get; private set; }
+
         public bool IsActive { get; private set; }
 
         public MailStatus Status { get; private set; }
@@ -46,6 +48,7 @@ namespace Lazy.Abp.Mailing.MailTasks
             Guid? smtpAccountId,
             string mailTo,
             string subject,
+            string body,
             bool isActive,
             MailStatus status,
             DateTime? planedSendingTime
@@ -56,6 +59,7 @@ namespace Lazy.Abp.Mailing.MailTasks
             SmtpAccountId = smtpAccountId;
             MailTo = Check.NotNullOrWhiteSpace(mailTo, nameof(mailTo));
             Subject = subject;
+            Body = body;
             IsActive = isActive;
             Status = status;
             PlanedSendingTime = planedSendingTime;
@@ -67,6 +71,7 @@ namespace Lazy.Abp.Mailing.MailTasks
             Guid? smtpAccountId,
             string mailTo,
             string subject,
+            string body,
             bool isActive,
             MailStatus status,
             DateTime? planedSendingTime
@@ -76,6 +81,7 @@ namespace Lazy.Abp.Mailing.MailTasks
             SmtpAccountId = smtpAccountId;
             MailTo = Check.NotNullOrWhiteSpace(mailTo, nameof(mailTo));
             Subject = subject;
+            Body = body;
             IsActive = isActive;
             Status = status;
             PlanedSendingTime = planedSendingTime;
